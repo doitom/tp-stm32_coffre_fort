@@ -47,6 +47,9 @@
 
 /* USER CODE BEGIN PV */
 
+char key_char;
+uint8_t keypad_flag = 0;
+
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -57,6 +60,8 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+
+
 
 /* USER CODE END 0 */
 
@@ -97,19 +102,35 @@ int main(void)
   RetargetInit(USART2);
   getchInit();
   LL_USART_EnableIT_RXNE(USART2);
+  LL_SYSTICK_EnableIT();
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
   /* USER CODE BEGIN WHILE */
   while (1)
   {
-	if (kbhit()) //if one char received on USART2
-	{
-	  printf("Recu:%c\r\n", getch()); //print it
-	}
+//	if (kbhit()) //if one char received on USART2
+//	{
+//	  printf("Recu:%c\r\n", getch()); //print it
+//	}
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
+
+	/*
+	* This code checks for a key press. If no key has been processed (`keypad_flag` is false),
+	* it scans the keypad. When a valid key is pressed, it prints the key and sets
+	* `keypad_flag` to true to prevent multiple prints for the same press.
+	*/
+	if (!keypad_flag) {
+		key_char = key_scan();
+		if (key_char != '-') {
+			printf("Touche presse: %c\r\n", key_char);
+			keypad_flag = 1;
+		}
+	}
+
   }
   /* USER CODE END 3 */
 }

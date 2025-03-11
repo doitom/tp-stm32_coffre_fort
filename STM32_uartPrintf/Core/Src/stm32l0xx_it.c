@@ -43,7 +43,10 @@
 
 /* Private variables ---------------------------------------------------------*/
 /* USER CODE BEGIN PV */
- uint8_t g_rxCarUSART2;
+uint8_t g_rxCarUSART2;
+uint32_t time = 0;
+
+uint16_t time_rebound = TIME_FOR_REBOUND;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -125,6 +128,23 @@ void PendSV_Handler(void)
 void SysTick_Handler(void)
 {
   /* USER CODE BEGIN SysTick_IRQn 0 */
+	time++;
+	if(time == 1000){
+		time = 0;
+	}
+
+	/*
+	* If the keypad flag is set, it decrements the `time_rebound` counter.
+	* When `time_rebound` reaches 0, it resets the keypad flag and restores the rebound time.
+	*
+	*/
+	if(keypad_flag){
+		time_rebound--;
+		if(time_rebound == 0){
+			keypad_flag = 0;
+			time_rebound = TIME_FOR_REBOUND;
+		}
+	}
 
   /* USER CODE END SysTick_IRQn 0 */
 

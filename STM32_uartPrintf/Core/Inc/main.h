@@ -46,7 +46,9 @@ extern "C" {
 
 /* Private includes ----------------------------------------------------------*/
 /* USER CODE BEGIN Includes */
+#include "keypad.h"
 
+extern uint8_t keypad_flag;
 /* USER CODE END Includes */
 
 /* Exported types ------------------------------------------------------------*/
@@ -78,12 +80,26 @@ void Error_Handler(void);
 #define USART_TX_GPIO_Port GPIOA
 #define USART_RX_Pin LL_GPIO_PIN_3
 #define USART_RX_GPIO_Port GPIOA
-#define LD2_Pin LL_GPIO_PIN_5
-#define LD2_GPIO_Port GPIOA
+#define row4_Pin LL_GPIO_PIN_5
+#define row4_GPIO_Port GPIOA
+#define row3_Pin LL_GPIO_PIN_6
+#define row3_GPIO_Port GPIOA
+#define row2_Pin LL_GPIO_PIN_7
+#define row2_GPIO_Port GPIOA
+#define col4_Pin LL_GPIO_PIN_10
+#define col4_GPIO_Port GPIOB
+#define col1_Pin LL_GPIO_PIN_7
+#define col1_GPIO_Port GPIOC
+#define col3_Pin LL_GPIO_PIN_8
+#define col3_GPIO_Port GPIOA
+#define col2_Pin LL_GPIO_PIN_9
+#define col2_GPIO_Port GPIOA
 #define TMS_Pin LL_GPIO_PIN_13
 #define TMS_GPIO_Port GPIOA
 #define TCK_Pin LL_GPIO_PIN_14
 #define TCK_GPIO_Port GPIOA
+#define row1_Pin LL_GPIO_PIN_6
+#define row1_GPIO_Port GPIOB
 #ifndef NVIC_PRIORITYGROUP_0
 #define NVIC_PRIORITYGROUP_0         ((uint32_t)0x00000007) /*!< 0 bit  for pre-emption priority,
                                                                  4 bits for subpriority */
@@ -97,6 +113,7 @@ void Error_Handler(void);
                                                                  0 bit  for subpriority */
 #endif
 /* USER CODE BEGIN Private defines */
+#define TIME_FOR_REBOUND 400;
 
 /* USER CODE END Private defines */
 
